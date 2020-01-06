@@ -1,46 +1,65 @@
+<!DOCTYPE html>
 <html>
- <head>
-  <title>Hello...</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>LAMP STACK</title>
+        <link rel="stylesheet" href="/assets/css/bulma.min.css">
+    </head>
+    <body>
+        <section class="hero is-medium is-info is-bold">
+            <div class="hero-body">
+                <div class="container has-text-centered">
+                    <h1 class="title">
+                        LAMP STACK
+                    </h1>
+                    <h2 class="subtitle">
+                        Your local development environment
+                    </h2>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container">
+                <div class="columns">
+                    <div class="column">
+                        <h3 class="title is-3 has-text-centered">Environment</h3>
+                        <hr>
+                        <div class="content">
+                            <ul>
+                                <li><?= apache_get_version(); ?></li>
+                                <li>PHP <?= phpversion(); ?></li>
+                                <li>
+                                    <?php
+                                    $link = mysqli_connect("mysql", "root", "tiger", null);
 
-  <meta charset="utf-8"> 
-
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-</head>
-<body>
-    <div class="container">
-    <?php echo "<h1>Hi! I'm happy</h1>"; ?>
-
-    <?php
-
-    // Connexion et sélection de la base
-    $conn = mysqli_connect('db', 'user', 'test', "myDb");
-
-
-    $query = 'SELECT * From Person';
-    $result = mysqli_query($conn, $query);
-
-    echo '<table class="table table-striped">';
-    echo '<thead><tr><th></th><th>id</th><th>name</th></tr></thead>';
-    while($value = $result->fetch_array(MYSQLI_ASSOC)){
-        echo '<tr>';
-        echo '<td><a href="#"><span class="glyphicon glyphicon-search"></span></a></td>';
-        foreach($value as $element){
-            echo '<td>' . $element . '</td>';
-        }
-
-        echo '</tr>';
-    }
-    echo '</table>';
-
-    /* Libération du jeu de résultats */
-    $result->close();
-
-    mysqli_close($conn);
-
-    ?>
-    </div>
-</body>
+/* check connection */
+                                    if (mysqli_connect_errno()) {
+                                        printf("MySQL connecttion failed: %s", mysqli_connect_error());
+                                    } else {
+                                        /* print server version */
+                                        printf("MySQL Server %s", mysqli_get_server_info($link));
+                                    }
+                                    /* close connection */
+                                    mysqli_close($link);
+                                    ?>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h3 class="title is-3 has-text-centered">Quick Links</h3>
+                        <hr>
+                        <div class="content">
+                            <ul>
+                                <li><a href="http://localhost/phpinfo.php">phpinfo()</a></li>
+                                <li><a href="http://localhost:8080">phpMyAdmin</a></li>
+                                <li><a href="http://localhost/test_db.php">Test DB Connection</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
 </html>
